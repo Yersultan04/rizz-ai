@@ -117,6 +117,18 @@ textarea::placeholder{color:#44445a}
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:#10b981;color:#fff;font-weight:700;font-size:13px;padding:12px 24px;border-radius:24px;transition:.3s;z-index:999;opacity:0}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
+/* PAYWALL */
+.paywall{display:none;position:fixed;inset:0;background:rgba(13,13,20,.95);z-index:200;align-items:center;justify-content:center;padding:24px}
+.paywall.show{display:flex}
+.pw-card{background:var(--card);border:1.5px solid var(--pink);border-radius:24px;padding:40px 32px;max-width:420px;width:100%;text-align:center}
+.pw-emoji{font-size:48px;margin-bottom:16px}
+.pw-card h2{font-size:26px;font-weight:900;margin-bottom:10px;letter-spacing:-1px}
+.pw-card p{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:28px}
+.pw-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--pink),var(--purple));border:none;border-radius:14px;color:#fff;font-family:'Inter',sans-serif;font-weight:800;font-size:16px;cursor:pointer;margin-bottom:12px;transition:.2s}
+.pw-btn:hover{opacity:.9;transform:translateY(-2px)}
+.pw-skip{background:none;border:none;color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;text-decoration:underline}
+.uses-left{display:inline-flex;align-items:center;gap:6px;background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--pink);margin-bottom:16px}
+
 /* ERROR */
 .error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:14px 16px;color:#f87171;font-size:13px;margin:20px 28px 0;display:none}
 </style>
@@ -130,6 +142,7 @@ textarea::placeholder{color:#44445a}
 
 <!-- HERO -->
 <section class="hero">
+  <div class="uses-left" id="usesLeft">✨ 3 free analyses left</div>
   <div class="hero-badge">🔥 AI-Powered Dating Coach</div>
   <h1>Never Run Out of<br/><span>Things to Say</span></h1>
   <p>Paste your conversation. Get 3 perfect replies instantly. Stop overthinking, start vibing.</p>
@@ -215,7 +228,32 @@ textarea::placeholder{color:#44445a}
 
 <div class="toast" id="toast">Copied to clipboard ✓</div>
 
+<!-- PAYWALL -->
+<div class="paywall" id="paywall">
+  <div class="pw-card">
+    <div class="pw-emoji">🔥</div>
+    <h2>You're getting good at this</h2>
+    <p>You've used all 3 free analyses. Unlock unlimited rizz for $19/month — cancel anytime.</p>
+    <button class="pw-btn" onclick="goToPricing()">Get Unlimited Access — $19/mo →</button>
+    <br/>
+    <button class="pw-skip" onclick="closePaywall()">Maybe later</button>
+  </div>
+</div>
+
 <script>
+const FREE_LIMIT = 3;
+
+function getUses(){ return parseInt(localStorage.getItem('rizz_uses') || '0'); }
+function addUse(){ localStorage.setItem('rizz_uses', getUses() + 1); updateUsesUI(); }
+function updateUsesUI(){
+  const left = Math.max(0, FREE_LIMIT - getUses());
+  const el = document.getElementById('usesLeft');
+  if(el) el.textContent = left > 0 ? `✨ ${left} free ${left===1?'analysis':'analyses'} left` : '🔒 Free limit reached';
+}
+function goToPricing(){ closePaywall(); document.querySelector('.pricing').scrollIntoView({behavior:'smooth'}); }
+function closePaywall(){ document.getElementById('paywall').classList.remove('show'); }
+updateUsesUI();
+
 async function analyze(){
   const conv = document.getElementById('conversation').value.trim();
   const ctx  = document.getElementById('context').value.trim();
@@ -224,6 +262,11 @@ async function analyze(){
   if(!conv || conv.length < 10){
     err.textContent = 'Paste a real conversation first 👆';
     err.style.display = 'block';
+    return;
+  }
+
+  if(getUses() >= FREE_LIMIT){
+    document.getElementById('paywall').classList.add('show');
     return;
   }
 
@@ -246,6 +289,7 @@ async function analyze(){
       return;
     }
 
+    addUse();
     renderResults(data);
   } catch(e){
     err.textContent = 'Something went wrong. Try again.';
