@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from anthropic import Anthropic
 from dotenv import load_dotenv
 import os
+import base64
 
 load_dotenv()
 
@@ -77,6 +78,56 @@ def analyze():
         import json, re
         raw = response.content[0].text.strip()
         # Strip markdown code blocks if present
+        raw = re.sub(r'^```(?:json)?\s*', '', raw)
+        raw = re.sub(r'\s*```$', '', raw)
+        result = json.loads(raw)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/analyze-screenshot", methods=["POST"])
+def analyze_screenshot():
+    file = request.files.get("screenshot")
+    context = request.form.get("context", "").strip()
+
+    if not file:
+        return jsonify({"error": "No screenshot uploaded"}), 400
+
+    img_bytes = file.read()
+    img_b64 = base64.standard_b64encode(img_bytes).decode("utf-8")
+
+    media_type = file.content_type or "image/png"
+
+    screenshot_prompt = "Look at this screenshot of a dating conversation. Extract the messages and analyze them."
+    if context:
+        screenshot_prompt += f"\n\nContext: {context}"
+
+    try:
+        response = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=800,
+            system=SYSTEM_PROMPT,
+            messages=[{
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": media_type,
+                            "data": img_b64
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "text": screenshot_prompt
+                    }
+                ]
+            }]
+        )
+        import json, re
+        raw = response.content[0].text.strip()
         raw = re.sub(r'^```(?:json)?\s*', '', raw)
         raw = re.sub(r'\s*```$', '', raw)
         result = json.loads(raw)

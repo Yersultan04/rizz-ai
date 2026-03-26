@@ -4,6 +4,15 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Rizz AI — Never Run Out of Things to Say</title>
+<meta name="description" content="AI dating conversation coach. Paste your chat, get 3 perfect replies instantly. Works with Tinder, Hinge, Bumble, iMessage."/>
+<meta property="og:title" content="Rizz AI — Never Run Out of Things to Say"/>
+<meta property="og:description" content="Paste your conversation. Get 3 perfect replies in 2 seconds. AI-powered dating coach."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://askrizz.com"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Rizz AI — AI Dating Coach"/>
+<meta name="twitter:description" content="Paste your chat, get 3 perfect replies instantly."/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KFFV1PXVY"></script>
@@ -165,7 +174,23 @@ textarea::placeholder{color:#44445a}
 <div class="app-wrap">
   <div class="app-card">
     <div class="app-top">
-      <div class="app-label">📱 Paste your convo <span>— we'll handle the rest</span></div>
+      <div class="app-label">📱 Paste your convo <span>— or upload a screenshot</span></div>
+
+      <!-- Screenshot Upload -->
+      <div id="uploadArea" style="border:2px dashed var(--border);border-radius:14px;padding:24px;text-align:center;margin-bottom:12px;cursor:pointer;transition:.2s" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--pink)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="handleDrop(event)">
+        <div style="font-size:28px;margin-bottom:8px">📸</div>
+        <div style="font-size:14px;color:var(--muted)">Drop a screenshot here or <span style="color:var(--pink);font-weight:600">click to upload</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">PNG, JPG — we'll extract the text automatically</div>
+        <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFile(this.files[0])"/>
+      </div>
+      <div id="uploadPreview" style="display:none;position:relative;margin-bottom:12px">
+        <img id="previewImg" style="width:100%;border-radius:14px;border:1.5px solid var(--border)"/>
+        <button onclick="clearUpload()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);border:none;color:white;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px">×</button>
+        <div id="extractStatus" style="margin-top:8px;font-size:12px;color:var(--pink);text-align:center"></div>
+      </div>
+
+      <div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px">— or paste text directly —</div>
+
       <textarea id="conversation" placeholder="Her: omg I literally just got back from the worst day ever&#10;You: lol what happened&#10;Her: don't even ask 😭&#10;&#10;(paste your real conversation here)"></textarea>
       <div class="context-row">
         <input class="ctx-input" id="context" placeholder="Optional context: Hinge match, 3 days talking, she's into hiking…"/>
@@ -213,6 +238,28 @@ textarea::placeholder{color:#44445a}
   </div>
 </section>
 
+<!-- TRUST / PRIVACY -->
+<section class="trust" style="max-width:680px;margin:0 auto;padding:0 16px 80px;position:relative;z-index:1">
+  <div class="section-label">Your Privacy Matters</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center">
+    <div class="step">
+      <div style="font-size:32px;margin-bottom:10px">🔒</div>
+      <h3>No Data Stored</h3>
+      <p>Your conversations are analyzed in real-time and immediately deleted. We never save your chats.</p>
+    </div>
+    <div class="step">
+      <div style="font-size:32px;margin-bottom:10px">🛡️</div>
+      <h3>Encrypted</h3>
+      <p>All data is transmitted over HTTPS with 256-bit SSL encryption. Same security as your bank.</p>
+    </div>
+    <div class="step">
+      <div style="font-size:32px;margin-bottom:10px">👻</div>
+      <h3>Anonymous</h3>
+      <p>No account needed. No email required. No tracking. Just paste, get replies, and go.</p>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section class="pricing">
   <div class="section-label">Pricing</div>
@@ -220,7 +267,7 @@ textarea::placeholder{color:#44445a}
   <p>One plan. Unlimited rizz.</p>
   <div class="price-card">
     <div class="price-badge">Most Popular</div>
-    <div class="price-amount">$19<span>/mo</span></div>
+    <div class="price-amount">$9.99<span>/mo</span></div>
     <div class="price-period">Cancel anytime · No BS</div>
     <ul class="price-features">
       <li>Unlimited conversation analyses</li>
@@ -229,8 +276,8 @@ textarea::placeholder{color:#44445a}
       <li>Vibe analysis + "why it works" breakdown</li>
       <li>New AI models as they release</li>
     </ul>
-    <button class="price-btn" onclick="window.open('https://getrizzai.lemonsqueezy.com/checkout/buy/834b8026-d04b-4ff7-b1f7-fd1ee9497227','_blank')">Start for $19/month →</button>
-    <div class="price-note">🔒 Secure checkout · First 100 users get lifetime deal at $49</div>
+    <button class="price-btn" onclick="window.open('https://getrizzai.lemonsqueezy.com/checkout/buy/834b8026-d04b-4ff7-b1f7-fd1ee9497227','_blank')">Start for $9.99/month →</button>
+    <div class="price-note">🔒 Secure checkout via Lemon Squeezy · Cancel anytime</div>
   </div>
 </section>
 
@@ -241,8 +288,8 @@ textarea::placeholder{color:#44445a}
   <div class="pw-card">
     <div class="pw-emoji">🔥</div>
     <h2>You're getting good at this</h2>
-    <p>You've used all 3 free analyses. Unlock unlimited rizz for $19/month — cancel anytime.</p>
-    <button class="pw-btn" onclick="goToPricing()">Get Unlimited Access — $19/mo →</button>
+    <p>You've used all 3 free analyses. Unlock unlimited rizz for $9.99/month — cancel anytime.</p>
+    <button class="pw-btn" onclick="goToPricing()">Get Unlimited Access — $9.99/mo →</button>
     <br/>
     <button class="pw-skip" onclick="closePaywall()">Maybe later</button>
   </div>
@@ -267,8 +314,8 @@ async function analyze(){
   const ctx  = document.getElementById('context').value.trim();
   const err  = document.getElementById('errorMsg');
 
-  if(!conv || conv.length < 10){
-    err.textContent = 'Paste a real conversation first 👆';
+  if((!conv || conv.length < 10) && !uploadedImage){
+    err.textContent = 'Paste a conversation or upload a screenshot first 👆';
     err.style.display = 'block';
     return;
   }
@@ -284,11 +331,19 @@ async function analyze(){
   document.getElementById('results').style.display = 'none';
 
   try {
-    const res = await fetch('/analyze', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({conversation: conv, context: ctx})
-    });
+    let res;
+    if (uploadedImage) {
+      const formData = new FormData();
+      formData.append('screenshot', uploadedImage);
+      formData.append('context', ctx);
+      res = await fetch('/analyze-screenshot', { method: 'POST', body: formData });
+    } else {
+      res = await fetch('/analyze', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({conversation: conv, context: ctx})
+      });
+    }
     const data = await res.json();
 
     if(data.error){
@@ -344,10 +399,41 @@ function copyText(text, card){
   });
 }
 
+// Screenshot upload
+let uploadedImage = null;
+
+function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  uploadedImage = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('previewImg').src = e.target.result;
+    document.getElementById('uploadArea').style.display = 'none';
+    document.getElementById('uploadPreview').style.display = 'block';
+    document.getElementById('extractStatus').textContent = 'Screenshot ready — click "Get My Rizz" to analyze';
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  e.target.closest('#uploadArea').style.borderColor = 'var(--border)';
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+}
+
+function clearUpload() {
+  uploadedImage = null;
+  document.getElementById('uploadArea').style.display = 'block';
+  document.getElementById('uploadPreview').style.display = 'none';
+  document.getElementById('fileInput').value = '';
+}
+
 function reset(){
   document.getElementById('results').style.display = 'none';
   document.getElementById('conversation').value = '';
   document.getElementById('context').value = '';
+  clearUpload();
   document.getElementById('conversation').focus();
   window.scrollTo({top:0, behavior:'smooth'});
 }
