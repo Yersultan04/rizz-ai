@@ -3,11 +3,18 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 import os
 import base64
+import hashlib
+import hmac
+import json
 
 load_dotenv()
 
 app = Flask(__name__)
 client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+LEMONSQUEEZY_SIGNING_SECRET = os.getenv("LEMONSQUEEZY_SIGNING_SECRET", "")
+
+# In-memory store of paid emails (in production use DB)
+paid_users = set()
 
 SYSTEM_PROMPT = """You are Rizz AI — the world's best dating conversation coach.
 
@@ -134,6 +141,42 @@ def analyze_screenshot():
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/webhook/lemonsqueezy", methods=["POST"])
+def lemonsqueezy_webhook():
+    """Lemon Squeezy webhook — unlock user after payment."""
+    payload = request.get_data()
+    signature = request.headers.get("X-Signature", "")
+
+    # Verify signature
+    if LEMONSQUEEZY_SIGNING_SECRET:
+        digest = hmac.new(
+            LEMONSQUEEZY_SIGNING_SECRET.encode(),
+            payload,
+            hashlib.sha256
+        ).hexdigest()
+        if not hmac.compare_digest(digest, signature):
+            return jsonify({"error": "Invalid signature"}), 401
+
+    data = json.loads(payload)
+    event = data.get("meta", {}).get("event_name", "")
+
+    if event in ("order_created", "subscription_created", "subscription_payment_success"):
+        email = data.get("data", {}).get("attributes", {}).get("user_email", "")
+        if email:
+            paid_users.add(email.lower())
+            app.logger.info(f"Paid user: {email}")
+
+    return jsonify({"status": "ok"}), 200
+
+
+@app.route("/api/check-paid", methods=["POST"])
+def check_paid():
+    """Check if user has paid (by email)."""
+    data = request.json or {}
+    email = data.get("email", "").lower().strip()
+    return jsonify({"paid": email in paid_users})
 
 
 if __name__ == "__main__":
