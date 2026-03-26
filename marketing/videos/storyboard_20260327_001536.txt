@@ -1,0 +1,31 @@
+
+RIZZ AI — TikTok Video Storyboard
+===================================
+
+HOOK (0-3 sec):
+  Text on screen: "He said 'lol thanks' and you froze? Here's what to say."
+  Background: Dark, phone mockup
+
+CONVERSATION (3-10 sec):
+  Show chat bubbles appearing one by one:
+    [LEFT (gray)] I'm so bored rn
+    [RIGHT (blue)] same honestly
+    [LEFT (gray)] entertain me then
+
+PASTE INTO RIZZ AI (10-15 sec):
+  Screen: askrizz.com
+  Action: Paste conversation, click "Get My Rizz"
+  Loading animation...
+
+AI REPLIES (15-22 sec):
+  Show 3 cards appearing:
+    Playful: "Only if you promise not to laugh at my terrible jokes... actually, please do, I need the validation."
+    Confident: "Bet—what's something you've always wanted to do but never got around to?"
+    Witty: "Fair warning: my idea of entertainment is probably way different than yours, but I'm willing to take the risk."
+
+CTA (22-25 sec):
+  Text: "askrizz.com — 3 free tries"
+  Big text: "Link in bio"
+
+CAPTION:
+  He said 'lol thanks' and you froze? Here's what to say. #rizz #datingadvice #texting #ai #rizzai

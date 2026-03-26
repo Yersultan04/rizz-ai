@@ -1,0 +1,39 @@
+{
+  "hook": "POV: AI writes your texts and she actually replies.",
+  "conversation": {
+    "messages": [
+      {
+        "from": "him",
+        "text": "hey what are you up to this weekend"
+      },
+      {
+        "from": "you",
+        "text": "not sure yet, why?"
+      },
+      {
+        "from": "him",
+        "text": "was thinking we could grab coffee or something"
+      }
+    ],
+    "context": "Guy from class asked you out"
+  },
+  "ai_replies": {
+    "analysis": "He's making a casual coffee invitation - a low-pressure first move that shows genuine interest without being too forward.",
+    "replies": [
+      {
+        "style": "Playful",
+        "text": "Coffee sounds good, but fair warning - I'm way more interesting after my second cup \u2615"
+      },
+      {
+        "style": "Confident",
+        "text": "I'm down, send me some time options that work for you."
+      },
+      {
+        "style": "Witty",
+        "text": "Only if you promise the conversation is better than whatever's happening in class."
+      }
+    ]
+  },
+  "cta": "askrizz.com \u2014 3 free tries",
+  "generated_at": "2026-03-27T00:15:14.954586"
+}

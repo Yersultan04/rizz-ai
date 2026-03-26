@@ -1,0 +1,39 @@
+{
+  "hook": "He said 'lol thanks' and you froze? Here's what to say.",
+  "conversation": {
+    "messages": [
+      {
+        "from": "her",
+        "text": "I'm so bored rn"
+      },
+      {
+        "from": "you",
+        "text": "same honestly"
+      },
+      {
+        "from": "her",
+        "text": "entertain me then"
+      }
+    ],
+    "context": "Tinder match, she's testing you"
+  },
+  "ai_replies": {
+    "analysis": "She's testing if you can be interesting and take initiative rather than just agreeing with her\u2014time to show personality and confidence.",
+    "replies": [
+      {
+        "style": "Playful",
+        "text": "Only if you promise not to laugh at my terrible jokes... actually, please do, I need the validation."
+      },
+      {
+        "style": "Confident",
+        "text": "Bet\u2014what's something you've always wanted to do but never got around to?"
+      },
+      {
+        "style": "Witty",
+        "text": "Fair warning: my idea of entertainment is probably way different than yours, but I'm willing to take the risk."
+      }
+    ]
+  },
+  "cta": "askrizz.com \u2014 3 free tries",
+  "generated_at": "2026-03-27T00:15:36.191621"
+}

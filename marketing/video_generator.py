@@ -96,9 +96,9 @@ def generate_script() -> dict:
 
     response = claude.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=300,
-        system="""You are Rizz AI. Analyze this conversation and give 3 reply options.
-Return JSON: {"analysis": "...", "replies": [{"style": "Playful", "text": "..."}, {"style": "Confident", "text": "..."}, {"style": "Witty", "text": "..."}]}""",
+        max_tokens=500,
+        system="""You are Rizz AI. Analyze this conversation and give 3 SHORT reply options (1 sentence each).
+Return ONLY valid JSON: {"analysis": "one sentence", "replies": [{"style": "Playful", "text": "short reply"}, {"style": "Confident", "text": "short reply"}, {"style": "Witty", "text": "short reply"}]}""",
         messages=[{"role": "user", "content": f"Conversation:\n{convo_text}\nContext: {convo['context']}"}]
     )
 
@@ -173,7 +173,7 @@ CAPTION:
     # Save storyboard
     filename = f"storyboard_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     filepath = os.path.join(VIDEO_DIR, filename)
-    with open(filepath, "w") as f:
+    with open(filepath, "w", encoding="utf-8") as f:
         f.write(storyboard)
 
     print(f"  Storyboard saved: {filepath}")
