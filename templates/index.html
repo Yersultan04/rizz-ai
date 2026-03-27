@@ -41,7 +41,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:fl
 .nav-cta:hover{opacity:.85;transform:translateY(-1px)}
 
 /* HERO */
-.hero{padding:140px 24px 60px;text-align:center;position:relative;z-index:1}
+.hero{padding:180px 24px 60px;text-align:center;position:relative;z-index:1}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.3);border-radius:24px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--pink);margin-bottom:24px}
 .hero h1{font-size:clamp(36px,7vw,72px);font-weight:900;line-height:1.05;margin-bottom:20px;letter-spacing:-2px}
 .hero h1 span{background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -152,7 +152,12 @@ textarea::placeholder{color:#44445a}
 </head>
 <body>
 
-<nav>
+<div id="ph-banner" style="background:linear-gradient(90deg,#da552f,#e8723a);text-align:center;padding:10px 16px;font-size:13px;font-weight:700;color:white;position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:center;gap:8px">
+  🚀 We're live on Product Hunt! Support us →
+  <a href="https://www.producthunt.com/posts/rizz-ai-5" target="_blank" style="background:white;color:#da552f;padding:4px 12px;border-radius:6px;font-weight:800;font-size:12px;text-decoration:none">UPVOTE</a>
+  <span onclick="document.getElementById('ph-banner').style.display='none'" style="cursor:pointer;margin-left:8px;opacity:.7">✕</span>
+</div>
+<nav style="top:38px">
   <div class="nav-logo">Rizz AI ✨</div>
   <button class="nav-cta" onclick="document.querySelector('.pricing').scrollIntoView({behavior:'smooth'})">Get Full Access →</button>
 </nav>
@@ -160,6 +165,7 @@ textarea::placeholder{color:#44445a}
 <!-- HERO -->
 <section class="hero">
   <div class="uses-left" id="usesLeft">✨ 3 free analyses left</div>
+  <a href="https://www.producthunt.com/posts/rizz-ai-5" target="_blank" style="display:inline-block;margin-bottom:16px"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=rizz-ai-5&theme=dark" alt="Rizz AI on Product Hunt" style="height:40px"/></a>
   <div class="hero-badge">🔥 AI-Powered Dating Coach</div>
   <h1>Never Run Out of<br/><span>Things to Say</span></h1>
   <p>Paste your conversation. Get 3 perfect replies instantly. Stop overthinking, start vibing.</p>
@@ -277,7 +283,7 @@ textarea::placeholder{color:#44445a}
       <li>New AI models as they release</li>
     </ul>
     <button class="price-btn" onclick="window.open('https://getrizzai.lemonsqueezy.com/checkout/buy/834b8026-d04b-4ff7-b1f7-fd1ee9497227','_blank')">Start for $9.99/month →</button>
-    <div class="price-note">🔒 Secure checkout via Lemon Squeezy · Cancel anytime</div>
+    <div class="price-note">🔒 Secure checkout via Lemon Squeezy · Cancel anytime<br/>🎉 Use code <strong>PRODUCTHUNT</strong> at checkout for 1 month free</div>
   </div>
 </section>
 
@@ -290,6 +296,7 @@ textarea::placeholder{color:#44445a}
     <h2>You're getting good at this</h2>
     <p>You've used all 3 free analyses. Unlock unlimited rizz for $9.99/month — cancel anytime.</p>
     <button class="pw-btn" onclick="goToPricing()">Get Unlimited Access — $9.99/mo →</button>
+    <div style="margin-top:16px;background:rgba(255,45,120,.08);border:1px solid rgba(255,45,120,.2);border-radius:10px;padding:10px;font-size:12px;color:var(--muted)">🎉 Use code <strong style="color:var(--pink)">PRODUCTHUNT</strong> for 1 month free</div>
     <br/>
     <button class="pw-skip" onclick="closePaywall()">Maybe later</button>
   </div>
